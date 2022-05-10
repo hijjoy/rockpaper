@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>가위바위보 게임</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="all">
+    <h1 id="gameName">가위 바위 보!</h1>
+    <h3 id="result">Good Luck!</h3>
+    <div>
+        <div class="myChoice">
+            <div id="myPoint">You : 0</div>
+            <img id="myImg" src="rock.png" width="80" height="80"></id> 
+        </div>
+        <div class="computerChocice">
+            <div id="comPoint">Computer : 0</div>
+            <img id="comImg" src="paper.png" width="80" height="80">
+        </div>
+    </div>
+    <h4>choose one!</h4>        
+    <div id = "game">
+        <button id='btnPaper'><img src='paper.png' width="30" height="30"></button>
+        <button id='btnRock'><img src='rock.png'width="30" height="30"></button>
+        <button id='btnScissor'><img src='scissor.png'width="30" height="30"></button>    
+    </div>
+    </div>
+   
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        // 점수(이긴 횟수)를 담을 변수
+        var myPoint = 0; 
+        var comPoint = 0; 
+        // 0는 보, 1는 묵, 2는 가위로 user와 computer의 가위바위보 형태를 숫자로 담을 변수
+        var user = 0; 
+        var computer = 0;
+
+        function comChocice(){ // 컴퓨터의 변수가 random으로 0,1,2중에 결정되도록하고, 해당되는 가위바위보 이미지로 변경되도록하는 함수
+            computer = Math.floor(Math.random() * 3); 
+            if (computer == 0){
+                $('#comImg').attr("src", "paper.png");
+            }
+            else if(computer == 1){
+                $('#comImg').attr("src", "rock.png");
+            }
+            else if(computer == 2){
+                $('#comImg').attr("src", "scissor.png");
+            }
+        }
+
+        function goGame(){ // 누가 이겼는지 판단해서 점수랑 text 변경
+            if (user == 0 && computer == 1 || user == 1 && computer == 2 || user == 2 && computer == 0){
+                myPoint += 1;
+                $('#myPoint').text('You : ' + myPoint);
+                $('#result').text('이겼습니다!');
+            }
+            else if (user == computer){
+                $('#result').text('비겼습니다!');
+            }
+            else {
+                comPoint += 1;
+                $('#comPoint').text('Computer : ' + comPoint);
+                $('#result').text('졌습니다!');
+            }
+        }
+
+        // 아래 가위바위보 버튼을 클릭했을 때, 그에 해당하는 숫자를 user에 넣고, 내가 낸 이미지 변경
+        $('#btnPaper').click(function(){
+            $('#myImg').attr('src','paper.png');
+            user = 0;
+            comChocice();
+            goGame();
+        });
+        $('#btnRock').click(function(){
+            $('#myImg').attr('src','rock.png');
+            user = 1;
+            comChocice();
+            goGame();
+        });
+        $('#btnScissor').click(function(){
+            $('#myImg').attr('src','scissor.png');
+            user = 2;
+            comChocice();
+            goGame();
+        });
+    </script>
+</body>
+</html>
